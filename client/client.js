@@ -9,7 +9,11 @@ app.get('/callback',function(req,res){
   var code = req.query.code;
   //客户端拿着圣旨去找元帅领取令牌 token  带着code向服务器申请令牌
   request('http://localhost:3000/token?code='+code,function(err,response,body){
-
+      var tokenInfo = JSON.parse(body);
+      var token = tokenInfo.token;
+      request('http://localhost:3000/userInfo?token='+token,function(err,response,body){
+         res.send(body);
+      });
   });
 
 

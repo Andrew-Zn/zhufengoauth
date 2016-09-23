@@ -4,6 +4,12 @@
 var express = require('express');
 var path = require('path');
 var uuid = require('uuid');
+var USERS  = {
+    'zfpx':{
+        name:'珠峰培训',
+        avatar:'http://www.zhufengpeixun.com/skin/20142/img/logo.png'
+    }
+}
 var app = express();
 //设置模板的存放目录
 app.set('views',path.resolve('views'));
@@ -52,6 +58,12 @@ app.get('/token',function(req,res){
        userId:CODES[code].userId
    }
    res.send({token:token});
+});
+//根据token获取用户的信息 头像 呢称
+app.get('/userInfo',function(req,res){
+    var token = req.query.token;
+    var userId = TOKENS[token].userId;
+    res.send(USERS[userId]);
 });
 
 app.listen(3000);
